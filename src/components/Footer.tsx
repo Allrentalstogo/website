@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/context/LanguageContext";
 import { useQuote } from "@/context/QuoteContext";
-import { FaInstagram, FaFacebookF, FaTiktok, FaYoutube, FaWhatsapp } from "react-icons/fa";
+import { FaInstagram, FaFacebookF, FaTiktok, FaWhatsapp } from "react-icons/fa";
 import { serviceCategories, svcName } from "@/lib/services";
 import { catIcons } from "@/components/ServicesExplorer";
 import { pick } from "@/lib/i18n";
@@ -91,7 +91,7 @@ export default function Footer() {
                         const el = document.getElementById("contacto");
                         if (el) el.scrollIntoView({ behavior: "smooth" });
                       }}
-                      className="text-sm text-foreground hover:underline text-left"
+                      className="text-[0.9375rem] text-foreground hover:underline text-left"
                     >
                       {svcName(item, locale)}
                     </button>
@@ -115,19 +115,16 @@ export default function Footer() {
         {/* Social + copyright */}
         <div className="flex items-center justify-between mt-8 pt-6 border-t border-foreground/10">
           <div className="flex gap-3">
-            <a href="#" aria-label="Instagram" className="w-10 h-10 rounded-full bg-[#ffb6d9] flex items-center justify-center hover:scale-110 transition-all">
+            <a href="https://www.instagram.com/allrentalstogo/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-10 h-10 rounded-full bg-[#FAFE2A] flex items-center justify-center hover:scale-110 transition-all">
               <FaInstagram className="w-4 h-4 text-foreground" />
             </a>
-            <a href="#" aria-label="Facebook" className="w-10 h-10 rounded-full bg-[#a8d4ff] flex items-center justify-center hover:scale-110 transition-all">
+            <a href="https://www.facebook.com/people/All-Rentals-To-Go/61567893815515/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-10 h-10 rounded-full bg-[#a8d4ff] flex items-center justify-center hover:scale-110 transition-all">
               <FaFacebookF className="w-4 h-4 text-foreground" />
             </a>
-            <a href="#" aria-label="TikTok" className="w-10 h-10 rounded-full bg-[#d4c6ff] flex items-center justify-center hover:scale-110 transition-all">
+            <a href="https://www.tiktok.com/@all.rentals.to.go" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="w-10 h-10 rounded-full bg-[#ffb6d9] flex items-center justify-center hover:scale-110 transition-all">
               <FaTiktok className="w-4 h-4 text-foreground" />
             </a>
-            <a href="#" aria-label="YouTube" className="w-10 h-10 rounded-full bg-[#FAFE2A] flex items-center justify-center hover:scale-110 transition-all">
-              <FaYoutube className="w-4 h-4 text-foreground" />
-            </a>
-            <a href="https://wa.me/13465106312" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="w-10 h-10 rounded-full bg-[#a7f3d0] flex items-center justify-center hover:scale-110 transition-all">
+            <a href="https://wa.me/18324840011" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="w-10 h-10 rounded-full bg-[#a7f3d0] flex items-center justify-center hover:scale-110 transition-all">
               <FaWhatsapp className="w-4 h-4 text-foreground" />
             </a>
           </div>

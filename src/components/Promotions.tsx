@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/context/LanguageContext";
 import { motion } from "framer-motion";
-import { Plus, Gift } from "lucide-react";
+import { Plus, Gift, ArrowRight } from "lucide-react";
 import { NoiseTexture } from "@/components/ui/noise-texture";
 import { pick } from "@/lib/i18n";
 
@@ -64,10 +64,11 @@ export default function Promotions() {
                 {/* CTA */}
                 <a
                   href="#contacto"
-                  className="inline-block px-8 py-4 bg-foreground text-white rounded-full text-base sm:text-lg hover:scale-105 transition-all"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-foreground text-white rounded-full text-base sm:text-lg hover:scale-105 transition-all"
                   style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}
                 >
-                  {pick(locale, { es: "APROVECHAR OFERTA →", en: "GET THIS DEAL →", zh: "抢购优惠 →", hi: "यह ऑफर पाएं →" })}
+                  {pick(locale, { es: "APROVECHAR OFERTA", en: "GET THIS DEAL", zh: "抢购优惠", hi: "यह ऑफर पाएं" })}
+                  <ArrowRight className="w-5 h-5" />
                 </a>
               </div>
 

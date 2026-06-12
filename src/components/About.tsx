@@ -161,7 +161,7 @@ export default function About() {
           </p>
 
           {/* Payment methods */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-4">
             <div className="flex flex-col items-center justify-center gap-4 p-6 h-40 rounded-2xl bg-white">
               <div className="flex items-center gap-2">
                 <img src="/img/visa-logo.svg" alt="Visa" className="h-6 w-auto" />
@@ -172,15 +172,21 @@ export default function About() {
               </span>
             </div>
             <div className="flex flex-col items-center justify-center gap-4 p-6 h-40 rounded-2xl bg-white">
-              <Banknote className="w-9 h-9 text-foreground" />
-              <span className="text-base font-bold text-foreground">
-                {pick(locale, { es: "Transferencias", en: "Transfers", zh: "转账", hi: "ट्रांसफर" })}
-              </span>
+              <img src="/img/apple-pay.svg" alt="Apple Pay" className="h-9 w-auto" />
+              <span className="text-base font-bold text-foreground">Apple Pay</span>
             </div>
             <div className="flex flex-col items-center justify-center gap-4 p-6 h-40 rounded-2xl bg-white">
               <img src="/img/Zelle-logo.svg" alt="Zelle" className="h-9 w-auto" />
+              <span className="text-base font-bold text-foreground">Zelle</span>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-4 p-6 h-40 rounded-2xl bg-white">
+              <img src="/img/cash-app.svg" alt="Cash App" className="h-9 w-auto" />
+              <span className="text-base font-bold text-foreground">Cash App</span>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-4 p-6 h-40 rounded-2xl bg-white">
+              <Banknote className="w-9 h-9 text-foreground" />
               <span className="text-base font-bold text-foreground">
-                Zelle
+                {pick(locale, { es: "Transferencias", en: "Transfers", zh: "转账", hi: "ट्रांसफर" })}
               </span>
             </div>
             <div className="flex flex-col items-center justify-center gap-4 p-6 h-40 rounded-2xl bg-white">

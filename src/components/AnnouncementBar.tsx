@@ -7,11 +7,13 @@ import { pick } from "@/lib/i18n";
 export default function AnnouncementBar() {
   const { locale } = useLanguage();
 
+  const year = new Date().getFullYear() + 3;
+
   const text = pick(locale, {
-    es: "AGENDA ABIERTA HASTA 2029",
-    en: "BOOKING OPEN THROUGH 2029",
-    zh: "预订已开放至 2029 年",
-    hi: "2029 तक बुकिंग खुली है",
+    es: `AGENDA ABIERTA HASTA ${year}`,
+    en: `BOOKING OPEN THROUGH ${year}`,
+    zh: `预订已开放至 ${year} 年`,
+    hi: `${year} तक बुकिंग खुली है`,
   });
 
   const cta = pick(locale, { es: "RESERVAR AHORA", en: "BOOK NOW", zh: "立即预订", hi: "अभी बुक करें" });

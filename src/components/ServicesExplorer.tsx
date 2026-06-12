@@ -150,7 +150,7 @@ export default function ServicesExplorer() {
                         }`}>
                           {isSelected && <Check className="w-2 h-2 text-white" />}
                         </span>
-                        <span className="text-sm text-foreground">{label}</span>
+                        <span className="text-[0.9375rem] text-foreground">{label}</span>
                       </button>
                     </li>
                   );

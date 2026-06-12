@@ -15,24 +15,59 @@ const eventTypes = {
 
 const guestRanges = ["1-50", "50-100", "100-200", "200-500", "500+"];
 
+// TODO: paste your Web3Forms access key here (from https://web3forms.com)
+const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
+
 export default function Contact() {
   const { locale } = useLanguage();
   const { selectedServices, removeService } = useQuote();
   const [selectedEvent, setSelectedEvent] = useState("");
+  const [otherEvent, setOtherEvent] = useState("");
   const [selectedGuests, setSelectedGuests] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [budget, setBudget] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
 
   const events = locale === "es" ? eventTypes.es : eventTypes.en;
+  const eventValue = selectedEvent === (locale === "es" ? "Otro" : "Other") ? otherEvent : selectedEvent;
 
   const buildWhatsAppMessage = () => {
     let msg = locale === "es" ? "¡Hola! Quiero cotizar:\n" : "Hi! I want a quote:\n";
-    if (selectedEvent) msg += `\n${locale === "es" ? "Evento" : "Event"}: ${selectedEvent}`;
+    if (eventValue) msg += `\n${locale === "es" ? "Evento" : "Event"}: ${eventValue}`;
     if (selectedGuests) msg += `\n${locale === "es" ? "Invitados" : "Guests"}: ${selectedGuests}`;
     if (selectedServices.length > 0) msg += `\n${locale === "es" ? "Servicios" : "Services"}: ${selectedServices.join(", ")}`;
     if (name) msg += `\n${locale === "es" ? "Nombre" : "Name"}: ${name}`;
+    if (budget) msg += `\n${locale === "es" ? "Presupuesto" : "Budget"}: ${budget}`;
     return encodeURIComponent(msg);
+  };
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: "Nueva cotización - All Rentals To Go",
+          from_name: "All Rentals To Go Web",
+          name,
+          email,
+          phone,
+          budget,
+          event: eventValue,
+          guests: selectedGuests,
+          services: selectedServices.join(", "),
+        }),
+      });
+      const data = await res.json();
+      setStatus(data.success ? "ok" : "error");
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -67,7 +102,8 @@ export default function Contact() {
 
           {/* Form */}
           <div className="p-6 sm:p-10 lg:p-12">
-            <motion.div
+            <motion.form
+              onSubmit={handleEmailSubmit}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -117,6 +153,8 @@ export default function Contact() {
                 {selectedEvent === (locale === "es" ? "Otro" : "Other") && (
                   <input
                     type="text"
+                    value={otherEvent}
+                    onChange={(e) => setOtherEvent(e.target.value)}
                     placeholder={pick(locale, { es: "¿Qué tipo de evento?", en: "What type of event?", zh: "哪种活动？", hi: "किस प्रकार का इवेंट?" })}
                     className="mt-3 w-full px-4 py-3.5 bg-background border border-foreground/10 rounded-xl text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-foreground text-sm"
                   />
@@ -193,6 +231,8 @@ export default function Contact() {
                   </label>
                   <input
                     type="text"
+                    value={budget}
+                    onChange={(e) => setBudget(e.target.value)}
                     placeholder="USD"
                     className="w-full bg-transparent text-foreground text-lg placeholder:text-foreground/20 focus:outline-none"
                   />
@@ -202,7 +242,7 @@ export default function Contact() {
               {/* CTAs */}
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
                 <a
-                  href={`https://wa.me/1346XXXXXXX?text=${buildWhatsAppMessage()}`}
+                  href={`https://wa.me/18324840011?text=${buildWhatsAppMessage()}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-3 px-8 py-5 bg-[#25D366] text-white rounded-xl hover:scale-[1.02] transition-all"
@@ -218,19 +258,34 @@ export default function Contact() {
                 </a>
                 <button
                   type="submit"
-                  className="flex-1 flex items-center justify-center gap-3 px-8 py-5 bg-foreground text-white rounded-xl hover:scale-[1.02] transition-all"
+                  disabled={status === "sending"}
+                  className="flex-1 flex items-center justify-center gap-3 px-8 py-5 bg-foreground text-white rounded-xl hover:scale-[1.02] transition-all disabled:opacity-60"
                 >
                   <Send className="w-5 h-5" />
                   <span
                     className="text-2xl sm:text-3xl"
                     style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
                   >
-                    {pick(locale, { es: "Enviar vía Email", en: "Send via Email", zh: "通过邮件发送", hi: "ईमेल से भेजें" })}
+                    {status === "sending"
+                      ? pick(locale, { es: "Enviando...", en: "Sending...", zh: "发送中...", hi: "भेज रहे हैं..." })
+                      : pick(locale, { es: "Enviar vía Email", en: "Send via Email", zh: "通过邮件发送", hi: "ईमेल से भेजें" })}
                   </span>
                   <ArrowRight className="w-5 h-5" />
                 </button>
               </div>
-            </motion.div>
+
+              {/* Submit status */}
+              {status === "ok" && (
+                <p className="mt-4 text-base font-bold text-[#16a34a]">
+                  {pick(locale, { es: "¡Mensaje enviado! Te contactaremos pronto.", en: "Message sent! We'll contact you soon.", zh: "消息已发送！我们会尽快联系您。", hi: "संदेश भेजा गया! हम जल्द ही संपर्क करेंगे।" })}
+                </p>
+              )}
+              {status === "error" && (
+                <p className="mt-4 text-base font-bold text-[#dc2626]">
+                  {pick(locale, { es: "Hubo un error. Intenta por WhatsApp.", en: "Something went wrong. Try WhatsApp.", zh: "出错了，请尝试 WhatsApp。", hi: "कुछ गड़बड़ हुई। WhatsApp आज़माएं।" })}
+                </p>
+              )}
+            </motion.form>
           </div>
         </div>
       </div>
