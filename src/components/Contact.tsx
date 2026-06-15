@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { X, ArrowRight, Send } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { pick } from "@/lib/i18n";
+import Script from "next/script";
 
 const eventTypes = {
   es: ["Boda", "Quinceañera", "Cumpleaños", "Bautizo", "Corporativo", "Otro"],
@@ -17,6 +18,8 @@ const guestRanges = ["1-50", "50-100", "100-200", "200-500", "500+"];
 
 // TODO: paste your Web3Forms access key here (from https://web3forms.com)
 const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
+// TODO: paste your Cloudflare Turnstile site key here (from https://dash.cloudflare.com -> Turnstile)
+const TURNSTILE_SITE_KEY = "YOUR_TURNSTILE_SITE_KEY";
 
 export default function Contact() {
   const { locale } = useLanguage();
@@ -28,7 +31,7 @@ export default function Contact() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [budget, setBudget] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error" | "captcha">("idle");
 
   const events = locale === "es" ? eventTypes.es : eventTypes.en;
   const eventValue = selectedEvent === (locale === "es" ? "Otro" : "Other") ? otherEvent : selectedEvent;
@@ -43,8 +46,15 @@ export default function Contact() {
     return encodeURIComponent(msg);
   };
 
-  const handleEmailSubmit = async (e: React.FormEvent) => {
+  const handleEmailSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // Cloudflare Turnstile token is injected into a hidden input by the widget
+    const tokenInput = e.currentTarget.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]');
+    const token = tokenInput?.value;
+    if (!token) {
+      setStatus("captcha");
+      return;
+    }
     setStatus("sending");
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
@@ -61,10 +71,13 @@ export default function Contact() {
           event: eventValue,
           guests: selectedGuests,
           services: selectedServices.join(", "),
+          "cf-turnstile-response": token,
         }),
       });
       const data = await res.json();
       setStatus(data.success ? "ok" : "error");
+      // reset the captcha so it can be solved again
+      (window as unknown as { turnstile?: { reset: () => void } }).turnstile?.reset();
     } catch {
       setStatus("error");
     }
@@ -239,8 +252,14 @@ export default function Contact() {
                 </div>
               </div>
 
+              {/* Captcha */}
+              <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />
+              <div className="mt-8">
+                <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="light" />
+              </div>
+
               {/* CTAs */}
-              <div className="mt-8 flex flex-col sm:flex-row gap-4">
+              <div className="mt-6 flex flex-col sm:flex-row gap-4">
                 <a
                   href={`https://wa.me/18324840011?text=${buildWhatsAppMessage()}`}
                   target="_blank"
@@ -283,6 +302,11 @@ export default function Contact() {
               {status === "error" && (
                 <p className="mt-4 text-base font-bold text-[#dc2626]">
                   {pick(locale, { es: "Hubo un error. Intenta por WhatsApp.", en: "Something went wrong. Try WhatsApp.", zh: "出错了，请尝试 WhatsApp。", hi: "कुछ गड़बड़ हुई। WhatsApp आज़माएं।" })}
+                </p>
+              )}
+              {status === "captcha" && (
+                <p className="mt-4 text-base font-bold text-[#dc2626]">
+                  {pick(locale, { es: "Por favor completa el captcha.", en: "Please complete the captcha.", zh: "请完成验证码。", hi: "कृपया कैप्चा पूरा करें।" })}
                 </p>
               )}
             </motion.form>
