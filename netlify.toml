@@ -1,10 +1,8 @@
 [build]
   command = "npm run build"
+  # Next static export (output: "export") writes the site to ./out
+  publish = "out"
 
 [build.environment]
-  # Next 16 requires Node >= 20.9; Netlify still defaults to older Node.
+  # Next 16 requires Node >= 20.9; Netlify defaults to older Node.
   NODE_VERSION = "20"
-
-# Official Next.js runtime for Netlify (handles SSR, routing, image, etc.)
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
