@@ -1,21 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Bebas_Neue } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const bebasNeue = Bebas_Neue({
-  weight: "400",
+const bebasNeue = localFont({
+  src: "./fonts/BebasNeue-Regular.ttf",
   variable: "--font-display",
-  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -40,7 +33,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} ${bebasNeue.variable} antialiased`}
+      className={`${GeistSans.variable} ${GeistMono.variable} ${bebasNeue.variable} antialiased`}
     >
       <body className="min-h-screen flex flex-col">{children}</body>
     </html>
