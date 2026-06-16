@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 import { pick } from "@/lib/i18n";
 
 const videos = [
-  "/img/new/1.MOV",
-  "/img/new/2.MOV",
-  "/img/new/3.MOV",
-  "/img/new/4.MOV",
+  "/img/new/1.mp4",
+  "/img/new/2.mp4",
+  "/img/new/3.mp4",
+  "/img/new/4.mp4",
 ];
 
 export default function VideoGallery() {
