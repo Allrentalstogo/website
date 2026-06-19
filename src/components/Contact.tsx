@@ -16,10 +16,10 @@ const eventTypes = {
 
 const guestRanges = ["1-50", "50-100", "100-200", "200-500", "500+"];
 
-// TODO: paste your Web3Forms access key here (from https://web3forms.com)
-const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
-// TODO: paste your Cloudflare Turnstile site key here (from https://dash.cloudflare.com -> Turnstile)
-const TURNSTILE_SITE_KEY = "YOUR_TURNSTILE_SITE_KEY";
+// Web3Forms access key (public by design — safe to expose in the frontend)
+const WEB3FORMS_ACCESS_KEY = "aa12867e-6695-4d70-86cc-fe6a105302d4";
+// Cloudflare Turnstile site key (public — used by the browser widget)
+const TURNSTILE_SITE_KEY = "0x4AAAAAADn4DQBMHQb4EUZs";
 
 export default function Contact() {
   const { locale } = useLanguage();

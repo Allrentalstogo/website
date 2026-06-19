@@ -147,23 +147,14 @@
     const mv = document.getElementById("ball");
 
     customElements.whenDefined("model-viewer").then(() => {
-      let prevUrl = null;
-      const start = Date.now();
-
-      const tick = () => {
-        const t = (Date.now() - start) / 1000;
-        renderEnv(t);
-        canvas.toBlob((b) => {
-          const url = URL.createObjectURL(b);
-          mv.environmentImage = url;
-          if (prevUrl) URL.revokeObjectURL(prevUrl);
-          prevUrl = url;
-        }, "image/png");
-      };
-
-      renderEnv(0);
-      tick();
-      setInterval(tick, 80); // ~12fps, smoother & faster
+      // Build the colored lighting environment ONCE. Re-generating it every
+      // frame forced model-viewer to re-process the lighting ~12x/sec, which
+      // caused the stutter. The ball auto-rotates (so reflections still move)
+      // and the CSS glow animates on the GPU — all smooth now.
+      renderEnv(1.2);
+      canvas.toBlob((b) => {
+        mv.environmentImage = URL.createObjectURL(b);
+      }, "image/png");
     });
   </script>
 </body>

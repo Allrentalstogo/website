@@ -16,10 +16,9 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 function detectBrowserLanguage(): Locale {
   if (typeof navigator === "undefined") return "es";
   const lang = (navigator.language || "").toLowerCase();
-  if (lang.startsWith("es")) return "es";
-  if (lang.startsWith("zh")) return "zh";
-  if (lang.startsWith("hi")) return "hi";
-  return "en";
+  // Only auto-apply the two primary markets; zh/hi are opt-in via the modal.
+  if (lang.startsWith("en")) return "en";
+  return "es";
 }
 
 const VALID_LOCALES: Locale[] = ["es", "en", "zh", "hi"];
