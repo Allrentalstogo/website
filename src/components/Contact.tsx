@@ -18,8 +18,9 @@ const guestRanges = ["1-50", "50-100", "100-200", "200-500", "500+"];
 
 // Web3Forms access key (public by design — safe to expose in the frontend)
 const WEB3FORMS_ACCESS_KEY = "aa12867e-6695-4d70-86cc-fe6a105302d4";
-// Cloudflare Turnstile site key (public — used by the browser widget)
-const TURNSTILE_SITE_KEY = "0x4AAAAAADn4DQBMHQb4EUZs";
+// hCaptcha site key — Web3Forms' own public key (free tier). Just enable
+// hCaptcha in your Web3Forms dashboard; no separate hCaptcha account needed.
+const HCAPTCHA_SITE_KEY = "50b2fe65-b00b-4b9e-ad62-3ba471098be2";
 
 export default function Contact() {
   const { locale } = useLanguage();
@@ -32,6 +33,7 @@ export default function Contact() {
   const [email, setEmail] = useState("");
   const [budget, setBudget] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error" | "captcha">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const events = locale === "es" ? eventTypes.es : eventTypes.en;
   const eventValue = selectedEvent === (locale === "es" ? "Otro" : "Other") ? otherEvent : selectedEvent;
@@ -48,8 +50,8 @@ export default function Contact() {
 
   const handleEmailSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Cloudflare Turnstile token is injected into a hidden input by the widget
-    const tokenInput = e.currentTarget.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]');
+    // hCaptcha token is injected into a hidden input by the widget
+    const tokenInput = e.currentTarget.querySelector<HTMLInputElement>('[name="h-captcha-response"]');
     const token = tokenInput?.value;
     if (!token) {
       setStatus("captcha");
@@ -71,14 +73,21 @@ export default function Contact() {
           event: eventValue,
           guests: selectedGuests,
           services: selectedServices.join(", "),
-          "cf-turnstile-response": token,
+          "h-captcha-response": token,
         }),
       });
       const data = await res.json();
-      setStatus(data.success ? "ok" : "error");
+      if (data.success) {
+        setStatus("ok");
+      } else {
+        console.error("Web3Forms error:", data);
+        setErrorMsg(data.message || "");
+        setStatus("error");
+      }
       // reset the captcha so it can be solved again
-      (window as unknown as { turnstile?: { reset: () => void } }).turnstile?.reset();
-    } catch {
+      (window as unknown as { hcaptcha?: { reset: () => void } }).hcaptcha?.reset();
+    } catch (err) {
+      console.error("Web3Forms request failed:", err);
       setStatus("error");
     }
   };
@@ -253,9 +262,9 @@ export default function Contact() {
               </div>
 
               {/* Captcha */}
-              <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />
+              <Script src="https://js.hcaptcha.com/1/api.js" async defer />
               <div className="mt-8">
-                <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="light" />
+                <div className="h-captcha" data-sitekey={HCAPTCHA_SITE_KEY} />
               </div>
 
               {/* CTAs */}
@@ -302,6 +311,7 @@ export default function Contact() {
               {status === "error" && (
                 <p className="mt-4 text-base font-bold text-[#dc2626]">
                   {pick(locale, { es: "Hubo un error. Intenta por WhatsApp.", en: "Something went wrong. Try WhatsApp.", zh: "出错了，请尝试 WhatsApp。", hi: "कुछ गड़बड़ हुई। WhatsApp आज़माएं।" })}
+                  {errorMsg ? ` (${errorMsg})` : ""}
                 </p>
               )}
               {status === "captcha" && (
