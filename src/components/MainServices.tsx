@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/context/LanguageContext";
 import { useQuote } from "@/context/QuoteContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Plus, X, Check } from "lucide-react";
 import ServicesExplorer from "@/components/ServicesExplorer";
@@ -42,6 +42,19 @@ export default function MainServices() {
   const [current, setCurrent] = useState(0);
   const [showAll, setShowAll] = useState(false);
   const [showSelection, setShowSelection] = useState(false);
+  const [vw, setVw] = useState(1280);
+
+  useEffect(() => {
+    const onResize = () => setVw(window.innerWidth);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  // Arc radius scales with the card width so cards always overlap the same,
+  // instead of separating on narrow/medium screens.
+  const cardFrac = vw < 640 ? 0.65 : vw < 1024 ? 0.38 : 0.28;
+  const arcRadius = vw * cardFrac * 2.2;
 
   const next = () => setCurrent((prev) => (prev + 1) % items.length);
   const prev = () => setCurrent((prev) => (prev - 1 + items.length) % items.length);
@@ -90,7 +103,7 @@ export default function MainServices() {
 
           // Arc positioning - cards rotate around a circle
           const angle = offset * 18; // degrees between cards
-          const radius = 900; // px radius of the arc
+          const radius = arcRadius; // responsive radius (scales with card width)
           const x = Math.sin((angle * Math.PI) / 180) * radius;
           const z = Math.cos((angle * Math.PI) / 180) * radius - radius;
           const rotateY = -angle;
@@ -136,7 +149,7 @@ export default function MainServices() {
                 <div className="flex-shrink-0 px-6 pb-5 pt-2">
                   <div className="flex items-end justify-between gap-3 mb-2">
                     <span
-                      className={`text-5xl sm:text-6xl lg:text-7xl leading-[0.85] ${isDark ? "text-white" : "text-foreground"}`}
+                      className={`text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl leading-[0.85] break-words min-w-0 ${isDark ? "text-white" : "text-foreground"}`}
                       style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.03em" }}
                     >
                       {s.label.toUpperCase()}

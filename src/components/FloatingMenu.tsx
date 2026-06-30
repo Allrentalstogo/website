@@ -31,10 +31,10 @@ export default function FloatingMenu() {
             exit={{ opacity: 0, y: -20 }}
             className="fixed top-4 left-1/2 -translate-x-1/2 z-[60]"
           >
-            <div className="flex items-center gap-8 px-6 py-3 bg-foreground rounded-full shadow-2xl shadow-foreground/20">
+            <div className="flex items-center justify-between gap-3 sm:gap-8 w-[94vw] max-w-xl sm:w-auto sm:max-w-none px-4 sm:px-6 py-3 bg-foreground rounded-full shadow-2xl shadow-foreground/20">
               <a
                 href="#inicio"
-                className="text-2xl sm:text-3xl text-white -skew-x-6 inline-block"
+                className="text-2xl sm:text-3xl text-white -skew-x-6 inline-block whitespace-nowrap"
                 style={{
                   fontFamily: "var(--font-display)",
                   letterSpacing: "-0.03em",
@@ -45,11 +45,11 @@ export default function FloatingMenu() {
               </a>
               <button
                 onClick={() => setMenuOpen(true)}
-                className="flex items-center gap-2 px-5 py-2.5 text-sm sm:text-base font-bold text-foreground bg-[#FAFE2A] rounded-full hover:scale-105 transition-all"
+                className="flex items-center gap-2 flex-shrink-0 px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-base font-bold text-foreground bg-[#FAFE2A] rounded-full hover:scale-105 transition-all whitespace-nowrap"
                 style={{ fontFamily: "var(--font-display)", letterSpacing: "0.03em" }}
               >
-                <Menu className="w-4 h-4" />
-                {pick(locale, { es: "VER TODOS LOS SERVICIOS", en: "VIEW ALL SERVICES", zh: "查看所有服务", hi: "सभी सेवाएं देखें" })}
+                <Menu className="w-4 h-4 flex-shrink-0" />
+                {pick(locale, { es: "VER SERVICIOS", en: "VIEW SERVICES", zh: "查看服务", hi: "सेवाएं देखें" })}
               </button>
             </div>
           </motion.div>
