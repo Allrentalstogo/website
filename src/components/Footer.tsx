@@ -15,9 +15,9 @@ export default function Footer() {
     <footer className="relative bg-[#C8D8FF]" id="footer">
       {/* Top CTA section */}
       <div className="relative px-6 sm:px-10 lg:px-16 pt-64 pb-16">
-        {/* Decorative images - absolute */}
-        <img src="/icons/cabezones.png" alt="" className="absolute top-6 right-4 sm:right-10 w-64 h-64 sm:w-80 sm:h-80 object-contain pointer-events-none" />
-        <img src="/icons/coreografias.png" alt="" className="absolute bottom-4 left-4 sm:left-10 w-52 h-52 sm:w-64 sm:h-64 object-contain pointer-events-none" />
+        {/* Decorative images - absolute, hidden on mobile so they don't overlap the CTA content */}
+        <img src="/icons/cabezones.png" alt="" className="hidden sm:block absolute top-6 right-4 sm:right-10 w-64 h-64 sm:w-80 sm:h-80 object-contain pointer-events-none" />
+        <img src="/icons/coreografias.png" alt="" className="hidden sm:block absolute bottom-4 left-4 sm:left-10 w-52 h-52 sm:w-64 sm:h-64 object-contain pointer-events-none" />
 
         {/* Row 1 - centered */}
         <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mb-6">

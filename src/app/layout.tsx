@@ -12,16 +12,16 @@ const bebasNeue = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "All Rentals To Go | Renta para Fiestas y Eventos en Houston",
+  title: "All Rentals To Go | Party & Event Rentals in Houston",
   description:
-    "Tu supermercado de servicios para eventos. Robots LED, DJ, Dance Floor, Photo Booth, Coreografías y más. Todo en un solo lugar en Houston, TX.",
+    "Your one-stop shop for event services. LED Robots, DJ, Dance Floor, Photo Booth, Choreography and more. Everything in one place in Houston, TX.",
   keywords: [
-    "renta para fiestas Houston",
-    "eventos Houston",
-    "robots LED",
+    "party rentals Houston",
+    "event rentals Houston",
+    "LED robots",
     "quinceañera Houston",
     "DJ Houston",
-    "party rentals Houston",
+    "renta para fiestas Houston",
   ],
 };
 
@@ -32,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="es"
+      lang="en"
       className={`${GeistSans.variable} ${GeistMono.variable} ${bebasNeue.variable} antialiased`}
     >
       <body className="min-h-screen flex flex-col">{children}</body>
