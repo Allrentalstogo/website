@@ -17,7 +17,7 @@ export default function Footer() {
       <div className="relative px-6 sm:px-10 lg:px-16 pt-8 sm:pt-64 pb-16">
         {/* Cabezones - centered above the title on mobile, absolute decoration on larger screens */}
         <div className="flex justify-center sm:hidden mb-4">
-          <img src="/icons/cabezones.png" alt="" className="w-40 h-40 object-contain pointer-events-none" />
+          <img src="/icons/cabezones.png" alt="" className="w-[480px] h-[480px] max-w-none object-contain pointer-events-none" />
         </div>
         <img src="/icons/cabezones.png" alt="" className="hidden sm:block absolute top-6 right-4 sm:right-10 w-64 h-64 sm:w-80 sm:h-80 object-contain pointer-events-none" />
         <img src="/icons/coreografias.png" alt="" className="hidden sm:block absolute bottom-4 left-4 sm:left-10 w-52 h-52 sm:w-64 sm:h-64 object-contain pointer-events-none" />
