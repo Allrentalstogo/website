@@ -14,8 +14,11 @@ export default function Footer() {
   return (
     <footer className="relative bg-[#C8D8FF]" id="footer">
       {/* Top CTA section */}
-      <div className="relative px-6 sm:px-10 lg:px-16 pt-64 pb-16">
-        {/* Decorative images - absolute, hidden on mobile so they don't overlap the CTA content */}
+      <div className="relative px-6 sm:px-10 lg:px-16 pt-8 sm:pt-64 pb-16">
+        {/* Cabezones - centered above the title on mobile, absolute decoration on larger screens */}
+        <div className="flex justify-center sm:hidden mb-4">
+          <img src="/icons/cabezones.png" alt="" className="w-40 h-40 object-contain pointer-events-none" />
+        </div>
         <img src="/icons/cabezones.png" alt="" className="hidden sm:block absolute top-6 right-4 sm:right-10 w-64 h-64 sm:w-80 sm:h-80 object-contain pointer-events-none" />
         <img src="/icons/coreografias.png" alt="" className="hidden sm:block absolute bottom-4 left-4 sm:left-10 w-52 h-52 sm:w-64 sm:h-64 object-contain pointer-events-none" />
 
@@ -113,8 +116,8 @@ export default function Footer() {
         </div>
 
         {/* Social + copyright */}
-        <div className="flex items-center justify-between mt-8 pt-6 border-t border-foreground/10">
-          <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4 mt-8 pt-6 border-t border-foreground/10">
+          <div className="flex justify-center gap-3">
             <a href="https://www.instagram.com/allrentalstogo/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-10 h-10 rounded-full bg-[#FAFE2A] flex items-center justify-center hover:scale-110 transition-all">
               <FaInstagram className="w-4 h-4 text-foreground" />
             </a>
@@ -128,17 +131,17 @@ export default function Footer() {
               <FaWhatsapp className="w-4 h-4 text-foreground" />
             </a>
           </div>
-          <p className="text-xs text-foreground">
+          <p className="text-xs text-foreground text-center sm:text-left">
             © {new Date().getFullYear()} All Rentals To Go. {t.footer.rights}
           </p>
         </div>
       </div>
 
-      {/* Giant logo text - subido */}
-      <div className="relative h-[16vw] overflow-hidden pointer-events-none">
+      {/* Giant logo text - subido, full width edge-to-edge on mobile */}
+      <div className="relative h-[22vw] sm:h-[16vw] overflow-hidden pointer-events-none">
         <div className="absolute bottom-0 left-0 right-0 flex justify-center">
           <span
-            className="absolute text-[18vw] leading-[0.75] whitespace-nowrap select-none translate-y-[20%] -skew-x-6 -translate-x-[16px]"
+            className="absolute text-[24vw] sm:text-[18vw] leading-[0.75] whitespace-nowrap select-none translate-y-[20%] -skew-x-6 -translate-x-[16px]"
             style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.03em" }}
             aria-hidden="true"
           >
@@ -146,7 +149,7 @@ export default function Footer() {
             <span className="text-[#FAFE2A]/15">TO GO</span>
           </span>
           <span
-            className="absolute text-[18vw] leading-[0.75] whitespace-nowrap select-none translate-y-[20%] -skew-x-6 -translate-x-[8px]"
+            className="absolute text-[24vw] sm:text-[18vw] leading-[0.75] whitespace-nowrap select-none translate-y-[20%] -skew-x-6 -translate-x-[8px]"
             style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.03em" }}
             aria-hidden="true"
           >
@@ -154,7 +157,7 @@ export default function Footer() {
             <span className="text-[#FAFE2A]/30">TO GO</span>
           </span>
           <span
-            className="relative text-[18vw] leading-[0.75] whitespace-nowrap select-none translate-y-[20%] -skew-x-6"
+            className="relative text-[24vw] sm:text-[18vw] leading-[0.75] whitespace-nowrap select-none translate-y-[20%] -skew-x-6"
             style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.03em" }}
           >
             <span className="text-white">ALL RENTALS </span>

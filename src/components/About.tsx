@@ -162,10 +162,10 @@ export default function About() {
 
           {/* Payment methods */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-4">
-            <div className="flex flex-col items-center justify-center gap-4 p-6 h-40 rounded-2xl bg-white">
-              <div className="flex items-center gap-2">
-                <img src="/img/visa-logo.svg" alt="Visa" className="h-6 w-auto" />
-                <img src="/img/Mastercard-logo.svg" alt="Mastercard" className="h-8 w-auto" />
+            <div className="flex flex-col items-center justify-center gap-4 p-3 sm:p-6 h-40 rounded-2xl bg-white">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <img src="/img/visa-logo.svg" alt="Visa" className="h-5 sm:h-6 w-auto flex-shrink-0" />
+                <img src="/img/Mastercard-logo.svg" alt="Mastercard" className="h-6 sm:h-8 w-auto flex-shrink-0" />
               </div>
               <span className="text-base font-bold text-foreground">
                 {pick(locale, { es: "Tarjetas", en: "Cards", zh: "银行卡", hi: "कार्ड" })}
