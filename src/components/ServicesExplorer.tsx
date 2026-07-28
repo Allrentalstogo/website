@@ -151,6 +151,11 @@ export default function ServicesExplorer() {
                           {isSelected && <Check className="w-2 h-2 text-white" />}
                         </span>
                         <span className="text-[0.9375rem] text-foreground">{label}</span>
+                        {item.price && (
+                          <span className="ml-auto pl-2 text-xs text-muted whitespace-nowrap" style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}>
+                            {item.price}
+                          </span>
+                        )}
                       </button>
                     </li>
                   );
@@ -198,9 +203,16 @@ export default function ServicesExplorer() {
                         }`}>
                           {isSelected && <Check className="w-3 h-3 text-white" />}
                         </span>
-                        <span>
-                          <span className="block text-lg text-foreground leading-tight" style={{ fontFamily: "var(--font-display)", letterSpacing: "0.01em" }}>
-                            {label}
+                        <span className="min-w-0">
+                          <span className="flex items-baseline gap-2">
+                            <span className="text-lg text-foreground leading-tight" style={{ fontFamily: "var(--font-display)", letterSpacing: "0.01em" }}>
+                              {label}
+                            </span>
+                            {item.price && (
+                              <span className="text-sm text-[#ff69b4] whitespace-nowrap" style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}>
+                                {item.price}
+                              </span>
+                            )}
                           </span>
                           <span className="block text-sm text-muted leading-snug mt-0.5">{desc}</span>
                         </span>

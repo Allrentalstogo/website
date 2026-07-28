@@ -66,7 +66,7 @@ export default function Hero() {
       <Confetti />
 
       {/* CTAs only */}
-      <div className="relative z-10 flex-1 flex flex-col justify-end pb-24 pt-[70vh] sm:pt-[75vh]">
+      <div className="relative z-10 flex-1 flex flex-col justify-start sm:justify-end pt-[70vh] sm:pt-[75vh] pb-12 sm:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
