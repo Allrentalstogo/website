@@ -1,7 +1,8 @@
 "use client";
 
 import { useLanguage } from "@/context/LanguageContext";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import { pick } from "@/lib/i18n";
 
 const videos = [
@@ -10,6 +11,29 @@ const videos = [
   "/img/new/3.mp4",
   "/img/new/4.mp4",
 ];
+
+function LazyVideo({ src }: { src: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  // Only start loading/playing the video once it's about to enter the
+  // viewport, so we don't fetch all 4 clips on page load (bandwidth).
+  const isInView = useInView(ref, { once: true, margin: "200px" });
+
+  return (
+    <div ref={ref} className="absolute inset-0 w-full h-full">
+      {isInView && (
+        <video
+          src={src}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="none"
+        />
+      )}
+    </div>
+  );
+}
 
 export default function VideoGallery() {
   const { locale } = useLanguage();
@@ -53,14 +77,7 @@ export default function VideoGallery() {
               transition={{ delay: i * 0.08 }}
               className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-foreground/50"
             >
-              <video
-                src={src}
-                className="absolute inset-0 w-full h-full object-cover"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
+              <LazyVideo src={src} />
             </motion.div>
           ))}
         </div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Star } from "lucide-react";
 import { pick } from "@/lib/i18n";
@@ -133,7 +134,7 @@ export default function Testimonials() {
               {/* Author */}
               <div className="flex items-center gap-4">
                 {review.avatar ? (
-                  <img src={review.avatar} alt={review.name} className="w-14 h-14 rounded-full object-cover" />
+                  <Image src={review.avatar} alt={review.name} width={56} height={56} className="w-14 h-14 rounded-full object-cover" />
                 ) : (
                   <div className="w-14 h-14 rounded-full bg-foreground flex items-center justify-center text-xl font-black text-white">
                     {review.name[0]}
@@ -154,9 +155,12 @@ export default function Testimonials() {
                     key={i}
                     className={`rounded-2xl overflow-hidden ${i === 0 ? "w-full" : "hidden sm:block w-full"}`}
                   >
-                    <img
+                    <Image
                       src={photo}
                       alt={`${review.name} event`}
+                      width={400}
+                      height={400}
+                      sizes="(max-width: 1024px) 50vw, 400px"
                       className="w-full h-[300px] lg:h-[400px] object-cover"
                     />
                   </div>

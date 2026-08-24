@@ -2,27 +2,28 @@
 
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { pick } from "@/lib/i18n";
 
 const images = [
-  { src: "/img/new/ROBOT & BIG HEAD XV.png", alt: "Robot & Big Head XV" },
-  { src: "/img/new/chente1.jpg", alt: "Show en vivo" },
-  { src: "/img/new/QUINCEAÑERA.png", alt: "Quinceañera" },
-  { src: "/img/new/DANCE FLOOR.jpg", alt: "Dance Floor LED" },
-  { src: "/img/new/ROBOT QUINCEAÑERA.png", alt: "Robot Quinceañera" },
-  { src: "/img/new/ZANQUERO.png", alt: "Zanquero" },
-  { src: "/img/new/chente2.jpg", alt: "Show en vivo" },
-  { src: "/img/new/ROBOT.png", alt: "Robot LED" },
-  { src: "/img/new/MIRROR PHOTO BOOTH.jpg", alt: "Mirror Photo Booth" },
-  { src: "/img/new/HORSES.png", alt: "Horses" },
-  { src: "/img/new/DANCING HORSES.png", alt: "Dancing Horses" },
-  { src: "/img/new/PARTY BUS.png", alt: "Party Bus" },
-  { src: "/img/new/chente3.jpg", alt: "Show en vivo" },
-  { src: "/img/new/MIRROR BOOTH.png", alt: "Mirror Booth" },
-  { src: "/img/new/TORO MECANICO.png", alt: "Toro Mecánico" },
-  { src: "/img/new/IMG_0732.jpg", alt: "Event Photo" },
+  { src: "/img/new/ROBOT & BIG HEAD XV.webp", alt: "Robot & Big Head XV" },
+  { src: "/img/new/chente1.webp", alt: "Show en vivo" },
+  { src: "/img/new/QUINCEAÑERA.webp", alt: "Quinceañera" },
+  { src: "/img/new/DANCE FLOOR.webp", alt: "Dance Floor LED" },
+  { src: "/img/new/ROBOT QUINCEAÑERA.webp", alt: "Robot Quinceañera" },
+  { src: "/img/new/ZANQUERO.webp", alt: "Zanquero" },
+  { src: "/img/new/chente2.webp", alt: "Show en vivo" },
+  { src: "/img/new/ROBOT.webp", alt: "Robot LED" },
+  { src: "/img/new/MIRROR PHOTO BOOTH.webp", alt: "Mirror Photo Booth" },
+  { src: "/img/new/HORSES.webp", alt: "Horses" },
+  { src: "/img/new/DANCING HORSES.webp", alt: "Dancing Horses" },
+  { src: "/img/new/PARTY BUS.webp", alt: "Party Bus" },
+  { src: "/img/new/chente3.webp", alt: "Show en vivo" },
+  { src: "/img/new/MIRROR BOOTH.webp", alt: "Mirror Booth" },
+  { src: "/img/new/TORO MECANICO.webp", alt: "Toro Mecánico" },
+  { src: "/img/new/IMG_0732.webp", alt: "Event Photo" },
 ];
 
 export default function Gallery() {
@@ -68,10 +69,12 @@ export default function Gallery() {
               onClick={() => setFullView(i)}
               className="relative aspect-[4/5] rounded-xl overflow-hidden group"
             >
-              <img
+              <Image
                 src={img.src}
                 alt={img.alt}
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                fill
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors" />
             </motion.button>
@@ -106,16 +109,22 @@ export default function Gallery() {
             </button>
 
             {/* Image */}
-            <motion.img
+            <motion.div
               key={fullView}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              src={images[fullView].src}
-              alt={images[fullView].alt}
-              className="max-w-[85vw] max-h-[85vh] object-contain rounded-xl"
+              className="relative w-[85vw] h-[85vh]"
               onClick={(e) => e.stopPropagation()}
-            />
+            >
+              <Image
+                src={images[fullView].src}
+                alt={images[fullView].alt}
+                fill
+                sizes="85vw"
+                className="object-contain rounded-xl"
+              />
+            </motion.div>
 
             {/* Next */}
             <button

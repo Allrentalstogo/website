@@ -1,6 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/context/LanguageContext";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Plus, Gift, ArrowRight } from "lucide-react";
 import { NoiseTexture } from "@/components/ui/noise-texture";
@@ -10,9 +11,9 @@ export default function Promotions() {
   const { locale } = useLanguage();
 
   const paidServices = [
-    { src: "/icons/robot.png", label: locale === "es" ? "Robot LED" : "LED Robot" },
-    { src: "/icons/dj.png", label: "DJ" },
-    { src: "/icons/dancefloor.png", label: "Dance Floor" },
+    { src: "/icons/robot.webp", label: locale === "es" ? "Robot LED" : "LED Robot" },
+    { src: "/icons/dj.webp", label: "DJ" },
+    { src: "/icons/dancefloor.webp", label: "Dance Floor" },
   ];
 
   return (
@@ -79,7 +80,7 @@ export default function Promotions() {
                   {paidServices.map((s, i) => (
                     <div key={i} className="flex flex-col items-center gap-2">
                       <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl bg-white/40 flex items-center justify-center p-3">
-                        <img src={s.src} alt={s.label} className="w-full h-full object-contain" />
+                        <Image src={s.src} alt={s.label} width={128} height={128} className="w-full h-full object-contain" />
                       </div>
                       <span className="text-sm font-bold text-foreground text-center" style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}>
                         {s.label.toUpperCase()}

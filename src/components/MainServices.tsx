@@ -3,6 +3,7 @@
 import { useLanguage } from "@/context/LanguageContext";
 import { useQuote } from "@/context/QuoteContext";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Plus, X, Check } from "lucide-react";
 import ServicesExplorer from "@/components/ServicesExplorer";
@@ -10,28 +11,28 @@ import { pick } from "@/lib/i18n";
 
 const services = {
   es: [
-    { label: "Robots LED", icon: "/icons/robot.png", color: "#1a1a2e", price: "$600", description: "Show de robots con luces LED que iluminan tu fiesta. Un espectáculo visual de alto impacto." },
-    { label: "Cabezones", icon: "/icons/cabezones.png", color: "#FAFE2A", price: "$350", description: "Bad Bunny, Vicente Fernández, Elvis Presley, Pitbull y más. Personajes gigantes que animan cualquier evento." },
-    { label: "Zanquero", icon: "/icons/zanquero.png", color: "#ffb07a", price: "$550", description: "Espectáculo visual de altura que impresiona desde el primer momento." },
-    { label: "Coreografías", icon: "/icons/coreografias2.png", color: "#d4c6ff", price: "Desde $1,500", description: "Bailes profesionales para quinceañeras, bodas y eventos especiales." },
-    { label: "DJ", icon: "/icons/dj.png", color: "#a7f3d0", price: "", description: "Música y ambiente profesional toda la noche. Equipos de sonido de alta calidad." },
-    { label: "Dance Floor LED", icon: "/icons/dancefloor.png", color: "#2d2d4e", price: "$2,000", description: "Pista de baile iluminada con efectos increíbles que transforman tu evento." },
-    { label: "Red Carpet", icon: "/icons/redcarpet.png", color: "#e84040", price: "$295", description: "Alfombra roja para una entrada espectacular digna de celebridad." },
-    { label: "Photo Booth", icon: "/icons/photo.png", color: "#1e3a5f", price: "Desde $550", description: "Digital, 360 y Mirror. Recuerdos instantáneos con props divertidos para todos tus invitados." },
-    { label: "Party Bus", icon: "/icons/partybus.png", color: "#c084fc", price: "", description: "Transporte con fiesta incluida. Llega a tu evento con estilo." },
-    { label: "Carpas", icon: "/icons/carpa.png", color: "#4ade80", price: "", description: "Espacios cubiertos elegantes para cualquier clima y tipo de evento." },
+    { label: "Robots LED", icon: "/icons/robot.webp", color: "#1a1a2e", price: "$600", description: "Show de robots con luces LED que iluminan tu fiesta. Un espectáculo visual de alto impacto." },
+    { label: "Cabezones", icon: "/icons/cabezones.webp", color: "#FAFE2A", price: "$350", description: "Bad Bunny, Vicente Fernández, Elvis Presley, Pitbull y más. Personajes gigantes que animan cualquier evento." },
+    { label: "Zanquero", icon: "/icons/zanquero.webp", color: "#ffb07a", price: "$550", description: "Espectáculo visual de altura que impresiona desde el primer momento." },
+    { label: "Coreografías", icon: "/icons/coreografias2.webp", color: "#d4c6ff", price: "Desde $1,500", description: "Bailes profesionales para quinceañeras, bodas y eventos especiales." },
+    { label: "DJ", icon: "/icons/dj.webp", color: "#a7f3d0", price: "", description: "Música y ambiente profesional toda la noche. Equipos de sonido de alta calidad." },
+    { label: "Dance Floor LED", icon: "/icons/dancefloor.webp", color: "#2d2d4e", price: "$2,000", description: "Pista de baile iluminada con efectos increíbles que transforman tu evento." },
+    { label: "Red Carpet", icon: "/icons/redcarpet.webp", color: "#e84040", price: "$295", description: "Alfombra roja para una entrada espectacular digna de celebridad." },
+    { label: "Photo Booth", icon: "/icons/photo.webp", color: "#1e3a5f", price: "Desde $550", description: "Digital, 360 y Mirror. Recuerdos instantáneos con props divertidos para todos tus invitados." },
+    { label: "Party Bus", icon: "/icons/partybus.webp", color: "#c084fc", price: "", description: "Transporte con fiesta incluida. Llega a tu evento con estilo." },
+    { label: "Carpas", icon: "/icons/carpa.webp", color: "#4ade80", price: "", description: "Espacios cubiertos elegantes para cualquier clima y tipo de evento." },
   ],
   en: [
-    { label: "LED Robots", icon: "/icons/robot.png", color: "#1a1a2e", price: "$600", description: "LED light robot show that illuminates your party. A high-impact visual spectacle." },
-    { label: "Big Heads", icon: "/icons/cabezones.png", color: "#FAFE2A", price: "$350", description: "Bad Bunny, Vicente Fernández, Elvis Presley, Pitbull and more. Giant characters that liven up any event." },
-    { label: "Stilt Walker", icon: "/icons/zanquero.png", color: "#ffb07a", price: "$550", description: "Impressive height visual spectacle from the very first moment." },
-    { label: "Choreography", icon: "/icons/coreografias2.png", color: "#d4c6ff", price: "From $1,500", description: "Professional dances for quinceañeras, weddings and special events." },
-    { label: "DJ", icon: "/icons/dj.png", color: "#a7f3d0", price: "", description: "Professional music and atmosphere all night. High quality sound equipment." },
-    { label: "LED Dance Floor", icon: "/icons/dancefloor.png", color: "#2d2d4e", price: "$2,000", description: "Illuminated dance floor with incredible effects that transform your event." },
-    { label: "Red Carpet", icon: "/icons/redcarpet.png", color: "#e84040", price: "$295", description: "Red carpet for a spectacular celebrity-worthy entrance." },
-    { label: "Photo Booth", icon: "/icons/photo.png", color: "#1e3a5f", price: "From $550", description: "Digital, 360 and Mirror. Instant memories with fun props for all your guests." },
-    { label: "Party Bus", icon: "/icons/partybus.png", color: "#c084fc", price: "", description: "Transportation with party included. Arrive at your event in style." },
-    { label: "Tents", icon: "/icons/carpa.png", color: "#4ade80", price: "", description: "Elegant covered spaces for any weather and event type." },
+    { label: "LED Robots", icon: "/icons/robot.webp", color: "#1a1a2e", price: "$600", description: "LED light robot show that illuminates your party. A high-impact visual spectacle." },
+    { label: "Big Heads", icon: "/icons/cabezones.webp", color: "#FAFE2A", price: "$350", description: "Bad Bunny, Vicente Fernández, Elvis Presley, Pitbull and more. Giant characters that liven up any event." },
+    { label: "Stilt Walker", icon: "/icons/zanquero.webp", color: "#ffb07a", price: "$550", description: "Impressive height visual spectacle from the very first moment." },
+    { label: "Choreography", icon: "/icons/coreografias2.webp", color: "#d4c6ff", price: "From $1,500", description: "Professional dances for quinceañeras, weddings and special events." },
+    { label: "DJ", icon: "/icons/dj.webp", color: "#a7f3d0", price: "", description: "Professional music and atmosphere all night. High quality sound equipment." },
+    { label: "LED Dance Floor", icon: "/icons/dancefloor.webp", color: "#2d2d4e", price: "$2,000", description: "Illuminated dance floor with incredible effects that transform your event." },
+    { label: "Red Carpet", icon: "/icons/redcarpet.webp", color: "#e84040", price: "$295", description: "Red carpet for a spectacular celebrity-worthy entrance." },
+    { label: "Photo Booth", icon: "/icons/photo.webp", color: "#1e3a5f", price: "From $550", description: "Digital, 360 and Mirror. Instant memories with fun props for all your guests." },
+    { label: "Party Bus", icon: "/icons/partybus.webp", color: "#c084fc", price: "", description: "Transportation with party included. Arrive at your event in style." },
+    { label: "Tents", icon: "/icons/carpa.webp", color: "#4ade80", price: "", description: "Elegant covered spaces for any weather and event type." },
   ],
 };
 
@@ -144,9 +145,12 @@ export default function MainServices() {
                 )}
                 {/* Image */}
                 <div className="flex-1 flex items-center justify-center p-6 min-h-0">
-                  <img
+                  <Image
                     src={s.icon}
                     alt={s.label}
+                    width={500}
+                    height={500}
+                    sizes="(max-width: 640px) 65vw, (max-width: 1024px) 38vw, 28vw"
                     className={`object-contain ${
                       idx === 1 ? "w-[130%] max-h-[95%] scale-115" :
                       [0,2,3,4,7,8].includes(idx) ? "w-[100%] max-h-[80%]" : "w-[75%] max-h-[65%]"

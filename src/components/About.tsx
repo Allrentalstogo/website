@@ -1,6 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/context/LanguageContext";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { Banknote, Wallet, MapPin, ArrowUpRight } from "lucide-react";
@@ -65,8 +66,14 @@ export default function About() {
   return (
     <section id="about" className="relative py-24 lg:py-32">
       {/* Full-width separator */}
-      <div className="w-full h-[620px] overflow-hidden mb-20">
-        <img src="/img/separador.jpg" alt="All Rentals To Go" className="w-full h-full object-cover" />
+      <div className="relative w-full h-[620px] overflow-hidden mb-20">
+        <Image
+          src="/img/separador.webp"
+          alt="All Rentals To Go"
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 sm:px-10">

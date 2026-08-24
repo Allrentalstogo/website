@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useQuote } from "@/context/QuoteContext";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { X, ArrowRight, Send } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
@@ -101,10 +102,12 @@ export default function Contact() {
         <div className="rounded-[2rem] overflow-hidden bg-white grid grid-cols-1 lg:grid-cols-[2fr_3fr]">
           {/* Image */}
           <div className="relative h-[30vh] lg:h-auto overflow-hidden">
-            <img
-              src="/img/araceli.png" 
+            <Image
+              src="/img/araceli.webp"
               alt="Robot & Big Head at Quinceañera"
-              className="absolute inset-0 w-full h-full object-cover"
+              fill
+              sizes="(max-width: 1024px) 100vw, 40vw"
+              className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a2e] to-transparent flex items-end p-8 sm:p-10">
               <h2
