@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18481292459"></script>
-<script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18481292459"></script>
+  <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-18481292459');
-</script>
+  gtag('js', new Date()); gtag('config', 'AW-18481292459');
+  </script>
+  
+  <!-- Event snippet for Compra conversion page -->
+  <script> 
+  gtag('event', 'conversion', { 'send_to': 'AW-18481292459/huaVCKjGtZIdEKvJyOxE', 'transaction_id': '' // 'new_customer': true /* calculate dynamically, populate with true/false */, }); 
+  </script>
   
   <meta charset="utf-8">
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
@@ -26,6 +30,12 @@
   </style>
 </head>
 <body>
+
+  <!-- Google tag (gtag.js) --> 
+    <amp-analytics type="gtag" data-credentials="include"> 
+    <script type="application/json"> { "vars": { "gtag_id": "AW-18481292459", "config": { "AW-18481292459": { "groups": "default" } } }, "triggers": { "C_WR6Q1r-gruE": { "on": "visible", "vars": { "event_name": "conversion", "transaction_id": "", "send_to": ["AW-18481292459/huaVCKjGtZIdEKvJyOxE"] } }} } </script> 
+    </amp-analytics>
+
   <model-viewer
     src="/confetti.glb"
     auto-rotate
